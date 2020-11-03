@@ -57,6 +57,7 @@ void extract_patches(cv::Mat &img,
     std::vector<size_t> pyr_idxs;
     convertKeypoints(kpts, M, pyr_idxs, PS, mag_factor);
     patches.clear();
+    patches.resize(kpts.size());
 #ifdef _OPENMP
     omp_set_nested(1);
 #endif
@@ -68,7 +69,7 @@ void extract_patches(cv::Mat &img,
                 M[i], cv::Size(PS,PS),
                 cv::INTER_LINEAR + cv::WARP_INVERSE_MAP + cv::WARP_FILL_OUTLIERS,
                 cv::BORDER_REPLICATE);
-        patches.push_back(current_patch);
+        patches[i] = current_patch;
     }
 }
 
